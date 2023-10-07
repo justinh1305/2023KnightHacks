@@ -27,16 +27,12 @@ def getJson(keyword, location, radius, type, max, min):
     if response.status_code == 200:
         data = response.json()
 
-        return data
         # Access the response data as needed
         #print(data)
     else:
         print('Error:', response.status_code)
-
-json_data = getJson('Main Street', '25.914329725092866, -80.30991221041161', 1500, 'restaurant', 4, 0)
-
-def readJson():
-    all_results = json_data.get("results")
+    
+    all_results = data.get("results")
     dict = {}
     for i, establishment in enumerate(all_results):
         #Conditional excludes any establishments that do not have all values listed, in doing so it also skips indexes.
@@ -60,6 +56,4 @@ def readJson():
 
             print(dict)
 
-
-
-readJson()
+getJson('Main Street', '25.914329725092866, -80.30991221041161', 1500, 'restaurant', 4, 0)
