@@ -4,6 +4,10 @@ import Swiper from 'react-native-swiper';
 import { router } from 'expo-router';
 
 export default function NewScreen() {
+  const handlePress = () => {
+    router.replace('/home');
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Swiper style={styles.wrapper} showsButtons={true}>
@@ -20,12 +24,10 @@ export default function NewScreen() {
         <View style={styles.slide}>
           <Image source={require('./assets/stonks.png')} style={styles.image} />
           <Text style={styles.header}>Step 3</Text>
-          <Text style={styles.text}>This is the step 3 for the tutorial</Text>
-          {/* Button to go to navigate to another screen */}
-          <TouchableOpacity
-            title="Go to Home"
-            onPress={() => router.navigate('Home')}
-          />
+          <Text style={styles.text}>This is the step 3 for the tutorial - nate</Text>
+          <TouchableOpacity onPress={handlePress}>
+            <Text>Go to Home Screen</Text>
+          </TouchableOpacity>
         </View>
       </Swiper>
     </SafeAreaView>
