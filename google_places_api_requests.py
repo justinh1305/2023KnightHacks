@@ -6,7 +6,7 @@ load_dotenv()
 # Define your API key
 api_key = os.getenv('MAPS_KEY')
 
-def getJson(keyword, location, radius, type, max, min):
+def getPlace(keyword, location, radius, type, max, min):
     url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
     # Define the parameters
@@ -54,6 +54,7 @@ def getJson(keyword, location, radius, type, max, min):
 
             dict[i] = {"name":Name, "price_level":Price, "rating":Rating, "reference": Reference, "lat":Lat, "lng":Lng, "photo_reference":Photo_ID}
 
-            print(dict)
+            #print(dict)
+            return dict
 
-getJson('Main Street', '25.914329725092866, -80.30991221041161', 1500, 'restaurant', 4, 0)
+#dict = getPlace('Main Street', '25.914329725092866, -80.30991221041161', 1500, 'restaurant', 4, 0)
