@@ -6,17 +6,18 @@ load_dotenv()
 # Define your API key
 api_key = os.getenv('MAPS_KEY')
 
-def getPlace(keyword, location, radius, type, max, min):
+
+def getPlace(keyword, location, radius, place_type, place_max, place_min):
     url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
     # Define the parameters
     params = {
-        'keyword':keyword,
-        'location':location,
+        'keyword': keyword,
+        'location': location,
         'radius': radius,
-        'type':type,
-        'maxPrice':max,
-        'minPrice':min,
+        'type': place_type,
+        'maxPrice': place_max,
+        'minPrice': place_min,
         'key': api_key
     }
 
@@ -28,15 +29,15 @@ def getPlace(keyword, location, radius, type, max, min):
         data = response.json()
 
         # Access the response data as needed
-        #print(data)
+        # print(data)
     else:
         print('Error:', response.status_code)
-    
+
     all_results = data.get("results")
     dict = {}
     for i, establishment in enumerate(all_results):
-        #Conditional excludes any establishments that do not have all values listed, in doing so it also skips indexes.
-        #For example, if index 2 is missing the price level, the conditional will skip 2 entirely and print indexes 0, 1, 3, ...
+        # Conditional excludes any establishments that do not have all values listed, in doing so it also skips indexes.
+        # For example, if index 2 is missing the price level, the conditional will skip 2 entirely and print indexes 0, 1, 3, ...
         if 'name' in establishment and 'price_level' in establishment and 'rating' in establishment and 'reference' in establishment and 'geometry' in establishment and 'photos' in establishment:
             Name = establishment['name']
             Price = establishment['price_level']
@@ -52,9 +53,10 @@ def getPlace(keyword, location, radius, type, max, min):
             for entry in Photos:
                 Photo_ID = entry['photo_reference']
 
-            dict[i] = {"name":Name, "price_level":Price, "rating":Rating, "reference": Reference, "lat":Lat, "lng":Lng, "photo_reference":Photo_ID}
+            dict[i] = {"name": Name, "price_level": Price, "rating": Rating, "reference": Reference, "lat": Lat,
+                       "lng": Lng, "photo_reference": Photo_ID}
 
-            #print(dict)
+            # print(dict)
             return dict
 
-#dict = getPlace('Main Street', '25.914329725092866, -80.30991221041161', 1500, 'restaurant', 4, 0)
+# dict = getPlace('Main Street', '25.914329725092866, -80.30991221041161', 1500, 'restaurant', 4, 0)

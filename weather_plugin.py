@@ -11,13 +11,13 @@ class Weather:
         name="Find Weather",
         input_description="The latitude and longitude",
     )
-    @sk_function(
-        name="Latitude",
+    @sk_function_context_parameter(
+        name="latitude",
         description="The latitude of the location",
     )
-    @sk_function(
-        name="Longitude",
+    @sk_function_context_parameter(
+        name="longitude",
         description="The longitude of the location",
     )
-    def find_weather(self, latitude: str, longitude: str) -> str:
-        return str(weather_api_call.getWeather(latitude, longitude))
+    def find_weather(self, context: SKContext) -> str:
+        return str(weather_api_call.getWeather(context["latitude"], context["longitude"]))
