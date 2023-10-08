@@ -9,13 +9,12 @@ api_key = os.getenv('MAPS_KEY')
 
 def getPlace(keyword, location, radius, place_type, place_max, place_min):
     url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
-
+    print(place_type)
     # Define the parameters
     params = {
         'keyword': keyword,
         'location': location,
         'radius': radius,
-        'type': place_type,
         'maxPrice': place_max,
         'minPrice': place_min,
         'key': api_key
@@ -34,31 +33,33 @@ def getPlace(keyword, location, radius, place_type, place_max, place_min):
         print('Error:', response.status_code)
 
     all_results = data.get("results")
+    print(len(all_results))
     dict = {}
+    c = 0
     for i, establishment in enumerate(all_results):
-        if i > 5:
+        if i > 10:
             break
-        # Conditional excludes any establishments that do not have all values listed, in doing so it also skips indexes.
-        # For example, if index 2 is missing the price level, the conditional will skip 2 entirely and print indexes 0, 1, 3, ...
-        if 'name' in establishment and 'price_level' in establishment and 'rating' in establishment and 'reference' in establishment and 'geometry' in establishment and 'photos' in establishment:
-            Name = establishment['name']
-            Price = establishment['price_level']
-            Rating = establishment['rating']
-            Reference = establishment['reference']
+        
+        Name = establishment.get('name')
+        Price = establishment.get('price_level', 1)
+        Rating = establishment.get('rating', 'N/A')
+        Reference = establishment.get('reference', 'N/A')
 
-            Geometry = establishment['geometry']
-            Location = Geometry['location']
-            Lat = Location['lat']
-            Lng = Location['lng']
+        Geometry = establishment.get('geometry', 'N/A')
+        Location = Geometry.get('location', 'N/A')
+        Lat = Location.get('lat', 'N/A')
+        Lng = Location.get('lng', 'N/A')
 
-            Photos = establishment['photos']
-            for entry in Photos:
-                Photo_ID = entry['photo_reference']
+        Photos = establishment.get('photos', 'N/A')
+        Photo_ID = "N/A"
+        for entry in Photos:
+            Photo_ID = entry.get('photo_reference', 'N/A')
+            break
 
-            dict[i] = {"name": Name, "price_level": Price, "rating": Rating, "reference": Reference, "lat": Lat,
-                       "lng": Lng, "photo_reference": Photo_ID}
-
-            # print(dict)
-            return dict
+        dict[c] = {"name": Name, "price_level": Price, "rating": Rating, "reference": Reference, "lat": Lat,
+                    "lng": Lng, "photo_reference": Photo_ID}
+        c += 1
+        print(dict)
+        return dict
 
 # dict = getPlace('Main Street', '25.914329725092866, -80.30991221041161', 1500, 'restaurant', 4, 0)

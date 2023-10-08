@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 load_dotenv()
 # Define your API key
 api_key = os.getenv('MAPS_KEY')
-
+LAT_LON = ""
 def get_context_find_oevents(data):
     context_variables = ContextVariables()
     context_variables["classification_name"] = data["classification_name"]
@@ -63,11 +63,13 @@ FUNCTION_MAP = {
 }
 
 def get_lat_lng(city):
+    global LAT_LON
     url = f"https://maps.googleapis.com/maps/api/geocode/json?address={city}&key={api_key}"
     response = requests.get(url).json()
     if response["status"] == "OK":
         lat = response["results"][0]["geometry"]["location"]["lat"]
         lng = response["results"][0]["geometry"]["location"]["lng"]
+        LAT_LON = f"{lat},{lng}"
         return f"{lat},{lng}"
     else:
         return None
@@ -143,6 +145,7 @@ class Orchestrator:
 
         all_results['BalancePlaces'] = balanced_place_keywords
         all_results['structured_data'] = structured_data
+        all_results['lat_lon'] = LAT_LON
         # write all_results to a json file
         with open('all_results.json', 'w') as fp:
             json.dump(all_results, fp)
