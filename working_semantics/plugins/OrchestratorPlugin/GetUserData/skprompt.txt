@@ -8,9 +8,6 @@ OUTPUT: {"location": "New York", "state_code": "NY", "departure_date": "10-07-20
 INPUT: ['Today is 10-13-2023', 'Chicago', 'I want to go on the 15th', '2 people', 'chill and relax', 'the most expensive as possible', 'plan to come back on the 25th']
 OUTPUT: {"location": "Chicago", "state_code": "IL", "departure_date": "10-15-2023", "arrival_date": "10-25-2023", "amount_of_travelers": 2, "type": ["chill", "relax"], "budget": "4"}
 
-INPUT: I have a 2x4 that is 3 feet long. Can you cut it in half?
-OUTPUT: {"number1":3, "number2":2}
-
 INPUT: ['We're leaving on the 2nd of March, 2024', 'Los Angeles here we come', 'We're a group of 3', 'We prefer a leisure and culture trip', 'returning on 12th March', 'Something middle of the road for our budget']
 OUTPUT: {"location": "Los Angeles", "state_code": "CA", "departure_date": "03-02-2024", "arrival_date": "03-12-2024", "amount_of_travelers": 3, "type": ["leisure", "culture"], "budget": "2"}
 

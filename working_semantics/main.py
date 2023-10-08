@@ -48,7 +48,7 @@ async def main():
 
     result1 = await kernel.run_async(
         orchestrator_plugin["RouteRequest"],
-        input_str=" ['Going to Seattle on the 11th of July, 2025', 'Traveling with a party of 5', 'Interested in a gastronomic and music oriented trip', 'Hoping to come back on the 21st', 'Our budget is moderately high']",
+        input_str="['Going to Seattle on the 11th of July, 2025', 'Traveling with a party of 5', 'Interested in a gastronomic and music oriented trip', 'Hoping to come back on the 21st', 'Our budget is moderately high']",
     )
     print(result1)
 

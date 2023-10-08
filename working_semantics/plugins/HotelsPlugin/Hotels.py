@@ -10,7 +10,7 @@ class Hotels:
     @sk_function(
         description="Finds hotels based on the keyword, location, search radius, max price bracket, and min price bracket",
         name="FindHotels",
-        input_description="The keyword, location, radisu, place_max, and place_min",
+        input_description="The keyword, location, radius, place_max, and place_min",
     )
     @sk_function_context_parameter(
         name="keyword",
@@ -33,5 +33,5 @@ class Hotels:
         description="The minimum price bracket of the hotel (0-4)",
     )
     def FindHotels(self, context: SKContext) -> str:
-        return str(hotel_requests.getHotel(context["keyword"], context["location"], context["place_max"],
-                                                      context["place_min"]))
+        return str(hotel_requests.getHotel(context["keyword"], context["location"], context["radius"], context["place_max"],
+                                           context["place_min"]))
