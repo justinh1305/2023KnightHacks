@@ -6,10 +6,10 @@ from semantic_kernel.skill_definition import (
 from semantic_kernel.orchestration.sk_context import SKContext
 
 
-class Place:
+class Places:
     @sk_function(
         description="Finds a list of places based on keyword, location, radius, type, max, min",
-        name="Get Place",
+        name="GetPlace",
         input_description="The keyword, location, radius, type, max, min",
     )
     @sk_function_context_parameter(

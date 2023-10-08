@@ -8,7 +8,7 @@ from semantic_kernel.orchestration.sk_context import SKContext
 class Weather:
     @sk_function(
         description="Finds the weather based on the latitude and longitude",
-        name="Find Weather",
+        name="FindWeather",
         input_description="The latitude and longitude",
     )
     @sk_function_context_parameter(

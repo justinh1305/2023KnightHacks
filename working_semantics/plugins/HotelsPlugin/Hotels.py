@@ -1,14 +1,15 @@
-import google_hotel_api_requests
+import hotel_requests
+
 from semantic_kernel.skill_definition import(
     sk_function,
     sk_function_context_parameter,
 )
 from semantic_kernel.orchestration.sk_context import SKContext
 
-class Hotel:
+class Hotels:
     @sk_function(
         description="Finds hotels based on the keyword, location, search radius, max price bracket, and min price bracket",
-        name="Find Hotels",
+        name="FindHotels",
         input_description="The keyword, location, radisu, place_max, and place_min",
     )
     @sk_function_context_parameter(
@@ -31,6 +32,6 @@ class Hotel:
         name="place_min",
         description="The minimum price bracket of the hotel (0-4)",
     )
-    def getHotel(self, context: SKContext) -> str:
-        return str(google_hotel_api_requests.getHotel(context["keyword"], context["location"], context["place_max"],
+    def FindHotels(self, context: SKContext) -> str:
+        return str(hotel_requests.getHotel(context["keyword"], context["location"], context["place_max"],
                                                       context["place_min"]))
