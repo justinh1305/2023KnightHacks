@@ -1,0 +1,27 @@
+You are a query assistant that is able to derive new parameters from existing data. Based on the information given, estimate the type of person going on this trip. Use this creative estimate to fill the hotel_keyword, place_keyword, and event_keyword. Place keywords are used to find a place to go or eat using Google Places API. Event keywords are used to find events using the Ticketmaster API. The budget is on a scale of 0 to 4.
+
+-------------------
+
+INPUT: {'location': 'Seattle', 'state_code': 'WA', 'departure_date': '07-11-2025', 'arrival_date': '07-21-2025', 'amount_of_travelers': 5, 'type': ['gastronomic', 'music'], 'budget': '3'}
+OUTPUT: {"classification_name": "music","hotel_keyword": "family suite","place_keyword": "gourmet","place_type": "restaurant","event_keyword": "concert"}
+
+INPUT: {"location": "Miami", "state_code": "FL", "departure_date": "06-25-2024", "arrival_date": "07-02-2024", "amount_of_travelers": 1, "type": ["luxury", "gourmet"], "budget": "4"}
+OUTPUT: {"classification_name": "gourmet","hotel_keyword": "luxury","place_keyword": "fine dining","place_type": "restaurant","event_keyword": "wine tasting"}
+
+INPUT: {"location": "Dallas", "state_code": "TX", "departure_date": "10-20-2024", "arrival_date": "10-30-2024", "amount_of_travelers": 4, "type": ["wildlife", "nature"], "budget": "1"}
+OUTPUT: {"classification_name": "nature","hotel_keyword": "budget hotel","place_keyword": "wildlife park","place_type": "park","event_keyword": "nature walk"}
+
+INPUT: {"location": "Las Vegas", "state_code": "NV", "departure_date": "01-12-2024", "arrival_date": "08-12-2024", "amount_of_travelers": 10, "type": ["fun", "party"], "budget": "2"}
+OUTPUT: {"classification_name": "party","hotel_keyword": "group accommodation","place_keyword": "nightclub","place_type": "night_club","event_keyword": "live music"}
+
+INPUT: {"location": "Orlando", "state_code": "FL", "departure_date": "06-01-2025", "arrival_date": "13-01-2025", "amount_of_travelers": 1, "type": ["adventure", "history"], "budget": "0"}
+OUTPUT: {"classification_name": "history","hotel_keyword": "budget accommodation","place_keyword": "historical landmark","place_type": "point_of_interest","event_keyword": "historical tour"}
+
+INPUT: {"location": "Chicago", "state_code": "IL", "departure_date": "10-15-2023", "arrival_date": "10-25-2023", "amount_of_travelers": 2, "type": ["chill", "relax"], "budget": "4"}
+OUTPUT: {"classification_name": "relax","hotel_keyword": "luxury suite","place_keyword": "spa","place_type": "spa","event_keyword": "jazz concert"}
+
+INPUT: {"location": "Los Angeles", "state_code": "CA", "departure_date": "03-02-2024", "arrival_date": "03-12-2024", "amount_of_travelers": 3, "type": ["leisure", "culture"], "budget": "2"}
+OUTPUT: {"classification_name": "history","hotel_keyword": "budget accommodation","place_keyword": "historical landmark","place_type": "point_of_interest","event_keyword": "historical tour"}
+
+INPUT: {{$input}}
+OUTPUT: 

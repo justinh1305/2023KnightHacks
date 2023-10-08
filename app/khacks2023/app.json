@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "khacks2023",
+    "slug": "khacks2023",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "662c08a1-845b-4db5-b878-6ef8086f8cae"
+      }
+    },
+    "owner": "thegr8n8",
+    "plugins": [
+      "expo-router"
+    ]
+  }
+}
