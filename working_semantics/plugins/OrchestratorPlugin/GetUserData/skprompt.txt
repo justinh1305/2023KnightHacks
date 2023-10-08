@@ -2,25 +2,25 @@ Extract a location, state code, departure_date, arrival_date, amount_of_traveler
 
 -------------------
 
-INPUT: ['Today is 10-07-2023', I want to go to New York', 'Tomorrow', '15 people are traveling with me', 'I want my trip to be adventurous and romantic', 'I want something not too expensive but also not cheap', 'I want to come back on 10-15-2023']
+INPUT: ["Today is 10-07-2023", I want to go to New York", "Tomorrow", "15 people are traveling with me", "I want my trip to be adventurous and romantic", "I want something not too expensive but also not cheap", "I want to come back on 10-15-2023"]
 OUTPUT: {"location": "New York", "state_code": "NY", "departure_date": "10-07-2023", "arrival_date": "10-15-2023", "amount_of_travelers": 15, "type": ["adventurous", "romantic"], "budget": "2"}
 
-INPUT: ['Today is 10-13-2023', 'Chicago', 'I want to go on the 15th', '2 people', 'chill and relax', 'the most expensive as possible', 'plan to come back on the 25th']
+INPUT: ["Today is 10-13-2023", "Chicago", "I want to go on the 15th", "2 people", "chill and relax", "the most expensive as possible", "plan to come back on the 25th"]
 OUTPUT: {"location": "Chicago", "state_code": "IL", "departure_date": "10-15-2023", "arrival_date": "10-25-2023", "amount_of_travelers": 2, "type": ["chill", "relax"], "budget": "4"}
 
-INPUT: ['We're leaving on the 2nd of March, 2024', 'Los Angeles here we come', 'We're a group of 3', 'We prefer a leisure and culture trip', 'returning on 12th March', 'Something middle of the road for our budget']
+INPUT: ["We"re leaving on the 2nd of March, 2024", "Los Angeles here we come", "We"re a group of 3", "We prefer a leisure and culture trip", "returning on 12th March", "Something middle of the road for our budget"]
 OUTPUT: {"location": "Los Angeles", "state_code": "CA", "departure_date": "03-02-2024", "arrival_date": "03-12-2024", "amount_of_travelers": 3, "type": ["leisure", "culture"], "budget": "2"}
 
-INPUT: ['On 25th June 2024', 'I plan to explore Miami', 'Coming back on 2nd of July 2024', 'You should know that I travel alone', 'Seeking a luxury and gourmet experience', 'My budget is definitely extravagant']
+INPUT: ["On 25th June 2024", "I plan to explore Miami", "Coming back on 2nd of July 2024", "You should know that I travel alone", "Seeking a luxury and gourmet experience", "My budget is definitely extravagant"]
 OUTPUT: {"location": "Miami", "state_code": "FL", "departure_date": "06-25-2024", "arrival_date": "07-02-2024", "amount_of_travelers": 1, "type": ["luxury", "gourmet"], "budget": "4"}
 
-INPUT: ['Heading out to Dallas on 20-10-2024', 'Returning back home on 30-10-2024', 'There are 4 of us traveling', 'We're looking for a wildlife and nature type trip', 'Budget is not that high']
+INPUT: ["Heading out to Dallas on 20-10-2024", "Returning back home on 30-10-2024", "There are 4 of us traveling", "We"re looking for a wildlife and nature type trip", "Budget is not that high"]
 OUTPUT: {"location": "Dallas", "state_code": "TX", "departure_date": "10-20-2024", "arrival_date": "10-30-2024", "amount_of_travelers": 4, "type": ["wildlife", "nature"], "budget": "1"}
 
-INPUT: ['We are off to Las Vegas', 'From 01-12-2024 to 08-12-2024', 'We are a group of 10', 'Seeking a fun and party trip', 'We have a moderate budget']
+INPUT: ["We are off to Las Vegas", "From 01-12-2024 to 08-12-2024", "We are a group of 10", "Seeking a fun and party trip", "We have a moderate budget"]
 OUTPUT: {"location": "Las Vegas", "state_code": "NV", "departure_date": "01-12-2024", "arrival_date": "08-12-2024", "amount_of_travelers": 10, "type": ["fun", "party"], "budget": "2"}
 
-INPUT: ['I'll be going on a journey to Orlando', 'Will depart on 06-01-2025', 'I shall return on 13-01-2025', 'I will be traveling with myself only', 'Looking forward adventure and history focused trip', 'However, I'm on a tight budget']
+INPUT: ["I"ll be going on a journey to Orlando", "Will depart on 06-01-2025", "I shall return on 13-01-2025", "I will be traveling with myself only", "Looking forward adventure and history focused trip", "However, I"m on a tight budget"]
 OUTPUT: {"location": "Orlando", "state_code": "FL", "departure_date": "06-01-2025", "arrival_date": "13-01-2025", "amount_of_travelers": 1, "type": ["adventure", "history"], "budget": "0"}
 
 INPUT: {{$input}}

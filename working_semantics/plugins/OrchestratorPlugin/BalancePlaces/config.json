@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "type": "completion",
-  "description": "Function that will take the user's tip preferences and it will break down categories and percentages that sum up to 1.",
+  "description": "BalancesKeywordsForPlaces",
   "completion": {
     "max_tokens": 256,
     "temperature": 1,

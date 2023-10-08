@@ -49,21 +49,13 @@ async def main():
         orchestrator_plugin["RouteRequest"],
         input_str="['Going to Seattle on the 11th of Oct, 2023', 'Traveling with a party of 5', 'Interested in a gastronomic and music oriented trip', 'Hoping to come back on the 21st', 'Our budget is moderately high']",
     )
-    print(result1)
 
-    # Make a request that runs the Sqrt function.
-    # result1 = await kernel.run_async(
-    #     orchestrator_plugin["RouteRequest"],
-    #     input_str="What is the square root of 634?",
-    # )
-    # print(result1)
-
-    # # Make a request that runs the Multiply function.
-    # result2 = await kernel.run_async(
-    #     orchestrator_plugin["RouteRequest"],
-    #     input_str="What is 12.34 times 56.78?",
-    # )
-    # print(result2)
+    import json
+    # read the all_results.json file
+    with open('all_results.json') as f:
+        all_results = json.load(f)
+    
+    print(all_results)
 
 
 # Run the main function

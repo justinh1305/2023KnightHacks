@@ -35,6 +35,8 @@ def getHotel(keyword, location, radius, place_max, place_min):
     all_results = data.get("results")
     dict = {}
     for i, establishment in enumerate(all_results):
+        if i > 3:
+            break
         Name = establishment['name']
         Rating = establishment['rating']
         Reference = establishment['reference']

@@ -67,13 +67,12 @@ def extract_event_info(response):
             'dates': dates,
             'priceRanges': priceRanges,
         })
-
     return event_info
 
 def search_events(keyword, state_code, start_date_time, end_date_time):
     url = f'https://app.ticketmaster.com/discovery/v2/events.json'
     params = {
-        'keyword': keyword,
+        'keyword': '',
         'apikey': api_key,
         'stateCode': state_code,
         'startDateTime': start_date_time,

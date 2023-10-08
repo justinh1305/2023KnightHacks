@@ -89,17 +89,16 @@ class Orchestrator:
     async def route_request(self, context: SKContext) -> str:
         # Save the original user request
         request = context["input"]
-        print(request)
         # Add the list of available functions to the context variables
         variables = ContextVariables()
         variables["input"] = request
         variables["options"] = {"ExperiencesPlugin": "FindEvents", "HotelsPlugin": "FindHotels", "PlacesPlugin": "GetPlace"}
 
         # Retrieve the intent from the user request
-        # get_intent = self._kernel.skills.get_function("OrchestratorPlugin", "GetIntent")
-        # intent = (
-        #     await self._kernel.run_async(get_intent, input_vars=variables)
-        # ).result.strip()
+        get_intent = self._kernel.skills.get_function("OrchestratorPlugin", "GetIntent")
+        intent = (
+            await self._kernel.run_async(get_intent, input_vars=variables)
+        ).result.strip()
 
         get_data = self._kernel.skills.get_function(
             "OrchestratorPlugin", "GetUserData"
@@ -108,7 +107,6 @@ class Orchestrator:
             await self._kernel.run_async(get_data, input_str=request)
         ).result
         structured_data = json.loads(getDataContext)
-        print(structured_data)
 
         expand_data = self._kernel.skills.get_function(
             "OrchestratorPlugin", "ExpandData"
@@ -117,21 +115,21 @@ class Orchestrator:
             await self._kernel.run_async(expand_data, input_str=str(structured_data))
         ).result
         structured_expanded = json.loads(expanded_data)
-
-        # merge the two dictionaries
         structured_data.update(structured_expanded)
-        print(structured_data)
 
-        # Call the appropriate function with the user request
-        # function = self._kernel.skills.get_function("ExperiencesPlugin", "FindOEvents")
-        # results = await self._kernel.run_async(
-        #     function, input_vars=context_variables
-        # )
-        # print(results)
-        # return results
-        # # print(results["input"]) 
+        json_data_b = {'type': ['gastronomic', 'music'], 'budget': '3', "place_keyword": "gourmet", "classification_name": "music"}
+        balance_place_keywords = self._kernel.skills.get_function(
+            "OrchestratorPlugin", "BalancePlaces"
+        )
 
-        # Goes through all the variable['options] and call get_function
+        balanced_place_keywords_context = (
+            await self._kernel.run_async(balance_place_keywords, input_str=str(json_data_b))
+        )
+
+        res = balanced_place_keywords_context['input']
+
+        balanced_place_keywords = json.loads(res)
+
         all_results = {}
         for option in variables["options"]:
             current_context = FUNCTION_MAP[variables["options"][option]](structured_data)
@@ -140,32 +138,13 @@ class Orchestrator:
             results = await self._kernel.run_async(
                 function, input_vars=current_context
             )
-            print(results)
-            all_results[option] = results["input"]
-            print(all_results)
+            #print(results['input'])
+            all_results[option] = results['input']
 
-        # print(all_results)
-        # return all_results
-    
-        # Call the appropriate function
-        # if intent == "Sqrt":
-        #     # Call the Sqrt function with the first number
-        #     square_root = self._kernel.skills.get_function("MathPlugin", "Sqrt")
-        #     sqrt_results = await self._kernel.run_async(
-        #         square_root, input_str=data["number1"]
-        #     )
-
-        #     return sqrt_results["input"]
-        # elif intent == "Multiply":
-        #     # Call the Multiply function with both numbers
-        #     multiply = self._kernel.skills.get_function("MathPlugin", "Multiply")
-        #     variables = ContextVariables()
-        #     variables["input"] = data["number1"]
-        #     variables["number2"] = data["number2"]
-        #     multiply_results = await self._kernel.run_async(
-        #         multiply, input_vars=variables
-        #     )
-
-        #     return multiply_results["input"]
-        # else:
-        #     return "I'm sorry, I don't understand."
+        all_results['BalancePlaces'] = balanced_place_keywords
+        all_results['structured_data'] = structured_data
+        # write all_results to a json file
+        with open('all_results.json', 'w') as fp:
+            json.dump(all_results, fp)
+        
+        return all_results

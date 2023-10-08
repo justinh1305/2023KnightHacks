@@ -36,6 +36,8 @@ def getPlace(keyword, location, radius, place_type, place_max, place_min):
     all_results = data.get("results")
     dict = {}
     for i, establishment in enumerate(all_results):
+        if i > 5:
+            break
         # Conditional excludes any establishments that do not have all values listed, in doing so it also skips indexes.
         # For example, if index 2 is missing the price level, the conditional will skip 2 entirely and print indexes 0, 1, 3, ...
         if 'name' in establishment and 'price_level' in establishment and 'rating' in establishment and 'reference' in establishment and 'geometry' in establishment and 'photos' in establishment:
