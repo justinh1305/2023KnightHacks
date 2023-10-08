@@ -50,14 +50,9 @@ def getPlace(keyword, location, radius, place_type, place_max, place_min):
         Lat = Location.get('lat', 'N/A')
         Lng = Location.get('lng', 'N/A')
 
-        Photos = establishment.get('photos', 'N/A')
-        Photo_ID = "N/A"
-        for entry in Photos:
-            Photo_ID = entry.get('photo_reference', 'N/A')
-            break
 
         dict[c] = {"name": Name, "price_level": Price, "rating": Rating, "reference": Reference, "lat": Lat,
-                    "lng": Lng, "photo_reference": Photo_ID}
+                    "lng": Lng}
         c += 1
         print(dict)
         return dict

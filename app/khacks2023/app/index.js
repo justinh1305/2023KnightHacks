@@ -10,23 +10,25 @@ export default function NewScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Swiper style={styles.wrapper} showsButtons={true}>
+      <Swiper style={styles.wrapper} showsButtons={false}>
         <View style={styles.slide}>
-          <Image source={require('./assets/stonks.png')} style={styles.image} />
-          <Text style={styles.header}>Step 1</Text>
-          <Text style={styles.text}>This is the step 1 for the tutorial</Text>
+          <Text style={styles.header}>Welcome to</Text>
+          <Image source={require('./assets/dameStatic.png')} style={styles.image}/>
+
+          <Image source={require('./assets/dame_logo.png')} style={styles.image}/>
+          <Text style={styles.text}>Your one stop shop for adventure</Text>
+
         </View>
         <View style={styles.slide}>
-          <Image source={require('./assets/stonks.png')} style={styles.image} />
-          <Text style={styles.header}>Step 2</Text>
-          <Text style={styles.text}>This is the step 2 for the tutorial</Text>
+          <Text style={styles.header}>Dame is going to ask you some questions...</Text>
+          <Image source={require('./assets/dame.gif')} style={styles.image}/>
         </View>
         <View style={styles.slide}>
-          <Image source={require('./assets/stonks.png')} style={styles.image} />
-          <Text style={styles.header}>Step 3</Text>
-          <Text style={styles.text}>This is the step 3 for the tutorial - nate</Text>
-          <TouchableOpacity onPress={handlePress}>
-            <Text>Go to Home Screen</Text>
+          <Text style={styles.header}>When Dame is done talking...</Text>
+          <Image source={require('./assets/dameStatic.png')} style={styles.image}/>
+          <Text style={styles.footheader}>You will be prompted to speak! When you finish, press send</Text>
+          <TouchableOpacity onPress={handlePress} style={styles.btnNav}>
+            <Text style={{color:'#fff'}}> Click Here to start </Text>
           </TouchableOpacity>
         </View>
       </Swiper>
@@ -47,17 +49,29 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 300,
-    height: 300,
+    height: 150,
     marginBottom: 40,
   },
   header: {
+    fontSize: 45,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 60,
+  },
+  footheader: {
     fontSize: 30,
     fontWeight: 'bold',
     color: '#000',
-    marginBottom: 20,
   },
   text: {
     color: '#000',
-    fontSize: 18,
+    fontSize: 20,
+  },
+  btnNav: {
+    backgroundColor: '#000',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 20,
+    color: '#fff',
   },
 });

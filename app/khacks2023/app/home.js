@@ -5,6 +5,8 @@ import { Audio } from 'expo-av';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as FileSystem from 'expo-file-system';
+import { router } from 'expo-router';
+
 
 const WHISPER_KEY = process.env.WHISPER_KEY;
 
@@ -49,6 +51,7 @@ export default class MainScreen extends React.Component {
         try {
             console.log(`Loading asset ${asset}..`);
             await soundObject.loadAsync(asset);
+            await soundObject.setVolumeAsync(1);
             await soundObject.playAsync();
             soundObject.setOnPlaybackStatusUpdate((status) => {
                 if (status.didJustFinish) {
@@ -79,12 +82,14 @@ export default class MainScreen extends React.Component {
         }
     }
 
-    async stopRecording() {
+    async stopRecording(skipWhisper = false) {
         console.log('Stopping recording..');
         await this.recording.stopAndUnloadAsync();
         this.setState({ isRecording: false });
         console.log('Recording stopped');
-
+        if (skipWhisper == true) {
+            return;
+        }
         const recordingURI = this.recording.getURI();
         console.log(recordingURI);
         const fileInfo = await FileSystem.getInfoAsync(recordingURI);
@@ -122,30 +127,16 @@ export default class MainScreen extends React.Component {
     handleWhisperOutput(text) {
         console.log(`Whisper output: ${text}`);
         const { currentAssetIndex, whisperResponses } = this.state;
-        if (currentAssetIndex < ASSETS.length - 1 ) {
+        if (currentAssetIndex < ASSETS.length - 1) {
             this.setState({ currentAssetIndex: currentAssetIndex + 1, whisperResponses: [...whisperResponses, text] }, () => {
                 this.playCurrentAsset();
             });
         } else {
             console.log('All assets played');
             this.setState({ whisperResponses: [...whisperResponses, text] });
-            console.log(whisperResponses);
             this.setState({ currentAssetIndex: 0 }); // reset currentAssetIndex to 0
-            console.log(whisperResponses);
-        }
-    }
-    handleWhisperOutput(text) {
-        console.log(`Whisper output: ${text}`);
-        const { currentAssetIndex, whisperResponses } = this.state;
-        if (currentAssetIndex < ASSETS.length - 1 ) {
-            this.setState({ currentAssetIndex: currentAssetIndex + 1, whisperResponses: [...whisperResponses, text] }, () => {
-                this.playCurrentAsset();
-            });
-        } else {
-            console.log('All assets played');
-            const updatedWhisperResponses = [...whisperResponses, text];
-            console.log(updatedWhisperResponses);
-            this.setState({ whisperResponses: updatedWhisperResponses, currentAssetIndex: 0 }); // reset currentAssetIndex to 0
+            // Navigate to next screen and pass whisperResponses as props
+            router.push({ pathname: '/results', params: { whisperResponses: whisperResponses } });
         }
     }
 
@@ -175,31 +166,23 @@ export default class MainScreen extends React.Component {
             <SafeAreaView style={styles.container}>
                 <Text style={styles.heading}>Plan Your Trip</Text>
                 <View style={styles.circle}>
-                    <Image source={require('./assets/stonks.png')} style={styles.image} />
+                    <Image source={this.state.isPlaying ? require('./assets/dame.gif') : require('./assets/dameStatic.png')} style={styles.image} />
                 </View>
-                <Button
-                    containerStyle={styles.buttonContainer}
-                    buttonStyle={styles.button}
-                    onPress={this.state.isRecording ? this.stopRecording.bind(this) : null}
-                    icon={
-                        <Icon name="microphone" size={15} color="white" />
-                    }
-                    title={this.state.isRecording ? ' Stop Recording ' : ' Start Planning '}
-                />
-                {this.recording && !this.state.isRecording && (
+                {this.state.isRecording && (
                     <Button
                         containerStyle={styles.buttonContainer}
                         buttonStyle={styles.button}
-                        onPress={this.state.isPlaying ? this.stopPlaying.bind(this) : this.playRecording.bind(this)}
+                        onPress={this.state.isRecording ? this.stopRecording.bind(this) : this.startRecording.bind(this)}
                         icon={
-                            <Icon name="play" size={15} color="white" />
+                            <Icon name="microphone" size={15} color="white" />
                         }
-                        title={this.state.isPlaying ? ' Stop Playing ' : ' Play Recording '}
+                        title={this.state.isRecording ? ' Stop Recording ' : ''}
                     />
                 )}
             </SafeAreaView>
         );
     }
+
 }
 
 const styles = StyleSheet.create({
