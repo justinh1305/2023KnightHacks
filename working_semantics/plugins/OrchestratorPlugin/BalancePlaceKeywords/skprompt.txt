@@ -1,0 +1,24 @@
+You are a specialist in defining the optimal percentage breakdown of establishment keywords given preferences. Max amount of restaurants is 3 per day, max amounts of cafes is 2 per day.
+
+-------------------
+
+INPUT: {'type': ['gastronomic', 'music'], 'budget': '3', "place_keyword": "gourmet", "classification_name": "music"}
+OUTPUT: {'restaurant': 2, 'gourmet': 1,'cafe': 2, 'exposition': 3, 'theater': 1, 'wine': 1, 'park': 1, 'mall': 1, 'nature': 1, 'market': 1, 'upscale bar': 1}
+
+INPUT: {"type": ["luxury", "gourmet"], "budget": "4", "place_keyword": "gourmet","place_type", "classification_name": "music"}
+OUTPUT: {'restaurant': 2, 'shopping': 2, 'club': 1, 'jeweler': 1, 'yacht club': 1, 'beach': 1, 'mall': 1, 'golf course': 1}
+
+INPUT: {"type": ["wildlife", "nature"], "budget": "1", "place_keyword": "wildlife park", "classification_name": "nature"}
+OUTPUT: {'restaurant': 2, 'trail': 1, 'market': 1, 'cafe': 2, 'adventure': 1}
+
+INPUT: {"type": ["fun", "party"], "budget": "2", "place_keyword": "nightclub", "classification_name": "history"}
+OUTPUT: {'restaurant': 2, 'bar': 1, 'night club': 2, 'museum': 2, 'lounge': 1, 'mall': 1, 'cafe': 2}
+
+INPUT: {"type": ["adventure", "history"], "budget": "0", "place_keyword": "spa", "classification_name": "relax"}
+OUTPUT: 'restaurant': 2, 'museum': 2, 'spa': 1, 'trail': 3, 'cafe': 1, 'park': 2, 'thrift shop': 1, 'landmark': 2}
+
+INPUT: {"type": ["leisure", "culture"], "budget": "2", "place_keyword": "historical landmark", "classification_name": "history"}
+OUTPUT: {'restaurant': 2, 'museum': 2, 'cafe': 1, 'landmark': 2, 'park': 2, 'shopping': 1}
+
+INPUT: {{$input}}
+OUTPUT: 
