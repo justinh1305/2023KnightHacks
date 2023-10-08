@@ -27,8 +27,7 @@ app = Flask(__name__)
 def initiate_plan():
     input_str = request.json.get('input_str', "['Going to Seattle on the 11th of Oct, 2023', 'Traveling with a party of 5', 'Interested in a gastronomic and music oriented trip', 'Hoping to come back on the 21st', 'Our budget is moderately high']")
     asyncio.run(main(input_str))
-    build_itinerary()
-    return jsonify([])
+    return build_itinerary()
 
 def convert_date(date):
     return date[6:10] + '-' + date[0:2] + '-' + date[3:5]
@@ -77,7 +76,9 @@ def build_itinerary():
                     daily_establishments.append(response_cache[each_keyword][index_tracker[each_keyword]])
             index_tracker[each_keyword] += 1
         itinerary_with_establishments.append(daily_establishments)
-    print(itinerary_with_establishments)
+    #print(itinerary_with_establishments)
+
+    return jsonify({'results': itinerary_with_establishments})
     
 async def main(input_str):
     # Initialize the kernel
