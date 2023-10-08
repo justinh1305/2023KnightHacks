@@ -97,10 +97,10 @@ class Orchestrator:
         variables["options"] = {"ExperiencesPlugin": "FindEvents", "HotelsPlugin": "FindHotels", "PlacesPlugin": "GetPlace"}
 
         # Retrieve the intent from the user request
-        get_intent = self._kernel.skills.get_function("OrchestratorPlugin", "GetIntent")
-        intent = (
-            await self._kernel.run_async(get_intent, input_vars=variables)
-        ).result.strip()
+        # get_intent = self._kernel.skills.get_function("OrchestratorPlugin", "GetIntent")
+        # intent = (
+        #     await self._kernel.run_async(get_intent, input_vars=variables)
+        # ).result.strip()
 
         get_data = self._kernel.skills.get_function(
             "OrchestratorPlugin", "GetUserData"
