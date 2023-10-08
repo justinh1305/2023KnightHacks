@@ -7,7 +7,7 @@ load_dotenv()
 api_key = os.getenv('MAPS_KEY')
 
 
-def getPlace(keyword, location, radius, place_max, place_min):
+def getHotel(keyword, location, radius, place_max, place_min):
     url = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
     # Define the parameters
