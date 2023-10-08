@@ -13,7 +13,7 @@ class Places:
         input_description="The keyword, location, radius, type, max, min",
     )
     @sk_function_context_parameter(
-        name="keyword",
+        name="place_keyword",
         description="The keyword of the location",
     )
     @sk_function_context_parameter(
@@ -37,6 +37,6 @@ class Places:
         description="The minimum price level of the location from 0-4",
     )
     def getPlace(self, context: SKContext) -> str:
-        return str(google_places_api_requests.getPlace(context["keyword"], context["location"], context["radius"],
+        return str(google_places_api_requests.getPlace(context["place_keyword"], context["location"], context["radius"],
                                                        context["place_type"], context["place_max"],
                                                        context["place_min"]))

@@ -31,7 +31,7 @@ class Experiences:
     def find_oevents(self, context: SKContext) -> str:
         return str(
             ticketmaster_api_call.get_events_discovery(context["classification_name"], context["state_code"],
-                                                       context["start_date_time"], context["end_date_time"]))
+                                                       context["start_date"], context["end_date"]))
 
     @sk_function(
         description="Finds events based on the keyword, state code, start date, and end date",
@@ -39,7 +39,7 @@ class Experiences:
         input_description="The keyword, state code, start date, and end date",
     )
     @sk_function_context_parameter(
-        name="keyword",
+        name="event_keyword",
         description="The keyword of the event",
     )
     @sk_function_context_parameter(
@@ -55,5 +55,5 @@ class Experiences:
         description="The end date of the event formatted in ISO 8601  (ex. 2023-11-21T20:00:00Z)",
     )
     def find_events(self, context: SKContext) -> str:
-        return str(ticketmaster_api_call.get_events_discovery(context["keyword"], context["state_code"],
-                                                              context["start_date_time"], context["end_date_time"]))
+        return str(ticketmaster_api_call.search_events(context["event_keyword"], context["state_code"],
+                                                              context["start_date"], context["end_date"]))

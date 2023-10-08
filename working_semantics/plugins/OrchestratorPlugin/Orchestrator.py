@@ -2,6 +2,80 @@ import json
 from semantic_kernel import ContextVariables, Kernel
 from semantic_kernel.skill_definition import sk_function
 from semantic_kernel.orchestration.sk_context import SKContext
+import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+# Define your API key
+api_key = os.getenv('MAPS_KEY')
+
+def get_context_find_oevents(data):
+    context_variables = ContextVariables()
+    context_variables["classification_name"] = data["classification_name"]
+    context_variables["state_code"] = data["state_code"]
+    context_variables["start_date"] = convert_date(data["departure_date"])
+    context_variables["end_date"] = convert_date(data["arrival_date"])
+    return context_variables
+
+def get_context_find_events(data):
+    context_variables = ContextVariables()
+    context_variables["event_keyword"] = data["event_keyword"]
+    context_variables["state_code"] = data["state_code"]
+    context_variables["start_date"] = convert_date(data["departure_date"])
+    context_variables["end_date"] = convert_date(data["arrival_date"])
+    return context_variables
+
+def get_context_find_hotels(data):
+    context_variables = ContextVariables()
+    context_variables["hotel_keyword"] = data["hotel_keyword"]
+    context_variables["location"] = get_lat_lng(data["location"])
+    context_variables["radius"] = DEFAULT_RADIUS
+    context_variables["place_max"] = data["budget"]
+    context_variables["place_min"] = PLACE_MIN
+    return context_variables
+
+def get_context_get_place(data):
+    context_variables = ContextVariables()
+    context_variables["place_keyword"] = data["place_keyword"]
+    context_variables["location"] = get_lat_lng(data["location"])
+    context_variables["radius"] = DEFAULT_RADIUS
+    context_variables["place_type"] = data["place_type"]
+    context_variables["place_max"] = data["budget"]
+    context_variables["place_min"] = PLACE_MIN
+    return context_variables
+
+DEFAULT_RADIUS = 15000
+PLACE_MIN = 0
+
+DATA_MODEL = {
+    "FindOEvents": ['classification_name', 'state_code', 'start_date', 'end_date'],
+    "FindEvents": ['event_keyword', 'state_code', 'start_date', 'end_date'],
+    "FindHotels": ['hotel_keyword', 'location', 'radius', 'place_max', 'place_min'],
+    "GetPlace": ['place_keyword', 'location', 'radius', 'place_type', 'place_max', 'place_min'],
+}
+
+FUNCTION_MAP = {
+    "FindOEvents": get_context_find_oevents,
+    "FindEvents": get_context_find_events,
+    "FindHotels": get_context_find_hotels,
+    "GetPlace": get_context_get_place,
+}
+
+def get_lat_lng(city):
+    url = f"https://maps.googleapis.com/maps/api/geocode/json?address={city}&key={api_key}"
+    response = requests.get(url).json()
+    if response["status"] == "OK":
+        lat = response["results"][0]["geometry"]["location"]["lat"]
+        lng = response["results"][0]["geometry"]["location"]["lng"]
+        return f"{lat},{lng}"
+    else:
+        return None
+
+# convert mm-dd-yyyy to yyyy-mm-dd
+def convert_date(date):
+    return date[6:10] + '-' + date[0:2] + '-' + date[3:5] + 'T20:00:00Z'
+
 
 
 class Orchestrator:
@@ -19,7 +93,7 @@ class Orchestrator:
         # Add the list of available functions to the context variables
         variables = ContextVariables()
         variables["input"] = request
-        variables["options"] = {"ExperiencesPlugin": "FindOEvents", "HotelsPlugin": "FindHotels", "PlacesPlugin": "GetPlace", "WeatherPlugin": "FindWeather"}
+        variables["options"] = {"ExperiencesPlugin": "FindEvents", "HotelsPlugin": "FindHotels", "PlacesPlugin": "GetPlace"}
 
         # Retrieve the intent from the user request
         # get_intent = self._kernel.skills.get_function("OrchestratorPlugin", "GetIntent")
@@ -43,20 +117,36 @@ class Orchestrator:
             await self._kernel.run_async(expand_data, input_str=str(structured_data))
         ).result
         structured_expanded = json.loads(expanded_data)
-        print(structured_expanded)
+
+        # merge the two dictionaries
+        structured_data.update(structured_expanded)
+        print(structured_data)
+
+        # Call the appropriate function with the user request
+        # function = self._kernel.skills.get_function("ExperiencesPlugin", "FindOEvents")
+        # results = await self._kernel.run_async(
+        #     function, input_vars=context_variables
+        # )
+        # print(results)
+        # return results
+        # # print(results["input"]) 
+
         # Goes through all the variable['options] and call get_function
-        # all_results = {}
-        # for option in variables["options"]:
-        #     # Call the appropriate function with the user request
-        #     function = self._kernel.skills.get_function(option, variables["options"][option])
-        #     results = await self._kernel.run_async(
-        #         function, input_vars=str(data)
-        #     )
-        #     all_results[option] = results["input"]
+        all_results = {}
+        for option in variables["options"]:
+            current_context = FUNCTION_MAP[variables["options"][option]](structured_data)
+            # Call the appropriate function with the user request
+            function = self._kernel.skills.get_function(option, variables["options"][option])
+            results = await self._kernel.run_async(
+                function, input_vars=current_context
+            )
+            print(results)
+            all_results[option] = results["input"]
+            print(all_results)
+
         # print(all_results)
         # return all_results
-        #print(data)
-        #return data
+    
         # Call the appropriate function
         # if intent == "Sqrt":
         #     # Call the Sqrt function with the first number

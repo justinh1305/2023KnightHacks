@@ -37,10 +37,9 @@ async def main():
 
     # Import the native functions.
     math_plugin = kernel.import_skill(Math(), skill_name="MathPlugin")
-    experiences_plugin = kernel.import_skill(Hotels(), skill_name="HotelsPlugin")
+    hotels_plugin = kernel.import_skill(Hotels(), skill_name="HotelsPlugin")
     experiences_plugin = kernel.import_skill(Experiences(), skill_name="ExperiencesPlugin")
     places_plugin = kernel.import_skill(Places(), skill_name="PlacesPlugin")
-    weather_plugin = kernel.import_skill(Weather(), skill_name="WeatherPlugin")
 
     orchestrator_plugin = kernel.import_skill(
         Orchestrator(kernel), skill_name="OrchestratorPlugin"
@@ -48,7 +47,7 @@ async def main():
 
     result1 = await kernel.run_async(
         orchestrator_plugin["RouteRequest"],
-        input_str="['Going to Seattle on the 11th of July, 2025', 'Traveling with a party of 5', 'Interested in a gastronomic and music oriented trip', 'Hoping to come back on the 21st', 'Our budget is moderately high']",
+        input_str="['Going to Seattle on the 11th of Oct, 2023', 'Traveling with a party of 5', 'Interested in a gastronomic and music oriented trip', 'Hoping to come back on the 21st', 'Our budget is moderately high']",
     )
     print(result1)
 
