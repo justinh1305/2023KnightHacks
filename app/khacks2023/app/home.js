@@ -10,11 +10,19 @@ import { router } from 'expo-router';
 
 const WHISPER_KEY = process.env.WHISPER_KEY;
 
-import where from './assets/where.mp3';
-import when from './assets/when.mp3';
+import where from './assets/where2.mp3';
+import when from './assets/when2.mp3';
 import ppl from './assets/ppl.mp3';
 import trip_type from './assets/trip_type.mp3';
 import budget_like from './assets/budget_like.mp3';
+
+const QUESTIONS = [
+    'Where are you going?',
+    'When are you going & coming back?',
+    'How many people are going?',
+    'What type of trip is it?',
+    'What is your budget like?',
+];
 
 const ASSETS = [
     where,
@@ -164,7 +172,7 @@ export default class MainScreen extends React.Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <Text style={styles.heading}>Plan Your Trip</Text>
+                <Text style={styles.heading}>{QUESTIONS[this.state.currentAssetIndex]}</Text>
                 <View style={styles.circle}>
                     <Image source={this.state.isPlaying ? require('./assets/dame.gif') : require('./assets/dameStatic.png')} style={styles.image} />
                 </View>

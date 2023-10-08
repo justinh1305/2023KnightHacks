@@ -55,7 +55,7 @@ export default function ResultsScreen() {
     useEffect(() => {
         const sendWhisperResponse = async () => {
             try {
-                const res = await axios.post('http://111c-132-170-212-13.ngrok-free.app/initiate-plan', { "input_str": item.whisperResponse });
+                const res = await axios.post('http://a3ed-132-170-212-13.ngrok-free.app/initiate-plan', { "input_str": item.whisperResponse });
                 console.log(res.data);
                 const results = res.data.results;
                 const itinerary = [];
